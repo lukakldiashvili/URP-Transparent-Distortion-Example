@@ -625,13 +625,13 @@ GameObject:
   - component: {fileID: 1358737506}
   - component: {fileID: 1358737505}
   - component: {fileID: 1358737504}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Distortion_Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!199 &1358737504
 ParticleSystemRenderer:
   serializedVersion: 6
