@@ -17,3 +17,7 @@
 ### Additional Notes:
 - Sample shader is included, or you can build your own shader graph or shader code ones based on it
 - Effect uses global texture as instead of SceneColor node, so you can access it in any ways you desire
+
+
+### Credits
+Shader effect is based on GabrielAguiar's - https://www.youtube.com/watch?v=CXCyVDEplyM&lc=Ugy0Y3_-fL0o58MLevl4AaABAg.9JsxKaODmzY9nZP8AiB2Wc
