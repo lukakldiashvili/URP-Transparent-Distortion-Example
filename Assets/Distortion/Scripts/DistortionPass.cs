@@ -10,10 +10,28 @@ class DistortionPass : ScriptableRenderPass {
 
 	private RTHandle m_tmpRT;
 
-	public void Setup(Action<PassData> passDataOptions, in RenderingData renderingData) {
+	public void Setup(Action<PassData> passDataOptions, float downSample, in RenderingData renderingData) {
 		m_PassData ??= new PassData();
 
 		passDataOptions?.Invoke(m_PassData);
+
+		SetupTmpRt(renderingData, downSample);
+	}
+
+	void SetupTmpRt(in RenderingData renderingData, float downSample) {
+		RenderTextureDescriptor rtDesc = renderingData.cameraData.cameraTargetDescriptor;
+		rtDesc.depthBufferBits = (int) DepthBits.None;
+
+		rtDesc.width  = Mathf.RoundToInt(rtDesc.width  / downSample);
+		rtDesc.height = Mathf.RoundToInt(rtDesc.height / downSample);
+		
+		#if UNITY_2022_1_OR_NEWER
+		RenderingUtils.ReAllocateIfNeeded(ref m_tmpRT, rtDesc, name: "_DistortionTmpRT");
+		#else
+		RenderEmul_2021.ReAllocateIfNeeded(ref m_tmpRT, rtDesc, name: "_DistortionTmpRT");
+		#endif
+		
+		m_PassData.tmpRT = m_tmpRT;
 	}
 
 	public void Dispose() {
@@ -26,6 +44,8 @@ class DistortionPass : ScriptableRenderPass {
 
 	private static void ExecutePass(PassData passData, ref RenderingData renderingData,
 	                                ref ScriptableRenderContext context) {
+		var tmpRT = passData.tmpRT;
+		
 		if (renderingData.cameraData.isPreviewCamera)
 			return;
 
@@ -56,8 +76,10 @@ class DistortionPass : ScriptableRenderPass {
 				#else
 				cameraData.renderer.cameraColorTarget;
 			#endif
+			
+			cmd.Blit(source, tmpRT);
 
-			cmd.SetGlobalTexture(k_GlobalFullSceneColorTexture, source);
+			cmd.SetGlobalTexture(k_GlobalFullSceneColorTexture, tmpRT);
 
 			context.ExecuteCommandBuffer(cmd);
 			cmd.Clear();
@@ -68,5 +90,6 @@ class DistortionPass : ScriptableRenderPass {
 		internal bool disableInSceneView;
 
 		public ProfilingSampler profilingSampler;
+		public RTHandle tmpRT;
 	}
 }

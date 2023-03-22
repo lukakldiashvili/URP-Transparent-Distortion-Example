@@ -12,6 +12,10 @@ public class DistortionFeature : ScriptableRendererFeature {
 	[Tooltip("Do not change from BeforeRenderingPostProcessing unless you know what you're doing.")]
 	public InjectionPoint injectionPoint = InjectionPoint.BeforeRenderingPostProcessing;
 
+	[Space]
+	[Tooltip("Effect Quality")]
+	[Range(1f, 10f)] public float downSample = 1.0f;
+	
 	// Hidden by scope because of no need
 	private ScriptableRenderPassInput requirements = ScriptableRenderPassInput.Color;
 
@@ -33,7 +37,7 @@ public class DistortionFeature : ScriptableRendererFeature {
 
 	/// <inheritdoc/>
 	public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData) {
-		fullScreenPass.Setup(SetupPassData, renderingData);
+		fullScreenPass.Setup(SetupPassData, downSample, renderingData);
 
 		renderer.EnqueuePass(fullScreenPass);
 	}

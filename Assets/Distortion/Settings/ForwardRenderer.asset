@@ -52,11 +52,8 @@ MonoBehaviour:
   m_Name: DistortionTexture
   m_EditorClassIdentifier: 
   m_Active: 1
-  passIndex: 0
   injectionPoint: 550
-  downsample: 1
-  scale: 0.5
-  iterations: 6
+  downSample: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
