@@ -20,4 +20,4 @@
 
 
 ### Credits
-Shader effect is based on GabrielAguiar's - https://www.youtube.com/watch?v=CXCyVDEplyM&lc=Ugy0Y3_-fL0o58MLevl4AaABAg.9JsxKaODmzY9nZP8AiB2Wc
+Shader effect is based on GabrielAguiar's - https://www.youtube.com/watch?v=CXCyVDEplyM
